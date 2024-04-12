@@ -70,7 +70,7 @@ class ProjectController extends Controller
         $project->slug = Str::slug($project->title);
 
         // gestione dell'immagine
-        $image_cover = Storage::put('upload/posts', $data['image']);
+        $image_cover = Storage::put('upload/projects', $data['image']);
         $project->image = $image_cover;
         
         $project->save();
