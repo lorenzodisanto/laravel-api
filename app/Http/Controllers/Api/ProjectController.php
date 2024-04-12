@@ -16,8 +16,11 @@ class ProjectController extends Controller
     public function index()
     {
         // prendo dati dal database
-        $projects = Project::paginate(10);
-        
+        $projects = Project::orderBy('id',"DESC")
+        ->select(['id','type_id','title','description','image'])
+        ->with('type:id,label,color', 'technologies:id,label,color')
+        ->paginate(10);
+
         // ritorno i dati nel formato json
         return response()->json($projects);
     }
@@ -26,7 +29,6 @@ class ProjectController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
