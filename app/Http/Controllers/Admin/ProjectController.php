@@ -70,9 +70,10 @@ class ProjectController extends Controller
         $project->slug = Str::slug($project->title);
 
         // gestione dell'immagine
-        $image_cover = Storage::put('upload/projects', $data['image']);
-        $project->image = $image_cover;
-        
+        if(isset($data['image'])){
+            $image_cover = Storage::put('upload/projects', $data['image']);
+            $project->image = $image_cover;
+        }     
         $project->save();
 
 
@@ -144,9 +145,11 @@ class ProjectController extends Controller
             }
         }
         // aggiungo nuova dell'immagine
-        $image_cover = Storage::put('upload/posts', $data['image']);
-        $project->image = $image_cover;
-
+        if(isset($data['image'])){
+            $image_cover = Storage::put('upload/projects', $data['image']);
+            $project->image = $image_cover;
+        } 
+        
         // salvo
         $project->save();
 
