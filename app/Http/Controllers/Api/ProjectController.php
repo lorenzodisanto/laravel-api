@@ -16,14 +16,14 @@ class ProjectController extends Controller
     public function index()
     {
         // prendo dati dal database
-        $projects = Project::orderBy('id',"DESC")
+        $projects = Project::orderBy('updated_at',"DESC")
         ->select(['id','type_id','title','description','image', 'updated_at'])
         ->with('type:id,label,color', 'technologies:id,label,color')
         ->paginate(12);
 
         // per ogni progetto recupero l'immagine da inviare al frontoffice
         foreach($projects as $project){
-            $project->image = !empty($project->image) ? asset('/storage/'. $project->image) : 'https://placehold.co/600x400';
+            $project->image = !empty($project->image) ? asset('/storage/'. $project->image) : 'https://i0.wp.com/thefoodmanager.com/wp-content/uploads/2021/04/placeholder-600x400-1.png?ssl=1';
         }
 
         // ritorno i dati nel formato json
