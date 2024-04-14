@@ -17,9 +17,14 @@ class ProjectController extends Controller
     {
         // prendo dati dal database
         $projects = Project::orderBy('id',"DESC")
-        ->select(['id','type_id','title','description','image'])
+        ->select(['id','type_id','title','description','image', 'updated_at'])
         ->with('type:id,label,color', 'technologies:id,label,color')
-        ->paginate(10);
+        ->paginate(12);
+
+        // per ogni progetto recupero l'immagine da inviare al frontoffice
+        foreach($projects as $project){
+            $project->image = !empty($project->image) ? asset('/storage/'. $project->image) : 'https://placehold.co/600x400';
+        }
 
         // ritorno i dati nel formato json
         return response()->json($projects);
